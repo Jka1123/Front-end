@@ -20,7 +20,7 @@ function MyTabs() {
       </Box>
 
       {value == 0 &&
-        <h1>Welcome to the Todo List App!</h1>}
+        <h1>Welcome to TodoList </h1>}
 
       {value == 1 &&
         <TodoList />}
