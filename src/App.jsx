@@ -1,7 +1,8 @@
 import './App.css'
 import Container from'@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline'
-import TodoList from "./TodoList"
+import TodoList from "./TodoList";
+import MyTabs from "./Tabs";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -17,7 +18,7 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-    <TodoList />
+    <MyTabs />
     </Container>
   );
 }
