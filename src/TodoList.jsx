@@ -2,9 +2,14 @@ import { useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-material.css";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import { DatePicker } from "@mui/x-date-pickers";
+import { format } from "date-fns";
 
 function TodoList() {
 
@@ -32,13 +37,13 @@ const [columnDefs, setColumnDefs] = useState([
 
 const [desc,setDesc] = useState("");
 const [todos, setTodos] = useState ([]);
-const [date, setDate] = useState ("");
+const [date, setDate] = useState (null);
 const [priority, setPriority] = useState("");
 const gridRef = useRef();
 
 const addTodo = () => {
-    setTodos([...todos, {date, desc, priority}]);
-    setDate("");
+    setTodos([...todos, {date: format(date, 'dd.MM.yyyy'), desc, priority}]);
+    setDate(null);
     setDesc("");
     setPriority("");
 
@@ -54,9 +59,14 @@ const handleDelete = () => {
     }
   };
 
+  const handleDate = (newDate) => {
+    setDate(newDate);
+
+  }
+
 
     return(
-        <>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack 
                 mt = {2}
                 direction = "row"
@@ -64,9 +74,14 @@ const handleDelete = () => {
                 justifyContent = "center"
                 alignItems = "center"
                 >
-                <TextField placeholder = "Date" 
-                onChange = {e => setDate(e.target.value)} 
-                value = {date} />
+                <DatePicker
+                label="Date"
+                inputFormat="MM/dd/yyyy"
+                value={date} 
+                onChange = {handleDate}
+                renderInput = {(params) => <TextField {...params} />}
+                />
+        
                 <TextField placeholder = "Description" 
                 onChange = {e => setDesc(e.target.value)} 
                 value = {desc} />
@@ -90,7 +105,7 @@ const handleDelete = () => {
                     animateRows = {true}
                     />
             </div>
-        </>
+        </LocalizationProvider>
     );
 }
 
